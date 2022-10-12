@@ -3,14 +3,18 @@ import { API_KEY, API_URL } from "../../config.js";
 import Preloader from "../Preloader/Preloader.jsx";
 import GoodsList from "../GoodsList/GoodsList.jsx";
 import Cart from "../Cart/Cart.jsx";
+import BasketList from "../BasketList/BasketList.jsx";
 import "./Shop.css";
 
 const Shop = () => {
     const [goods, setGoods] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
     const [order, setOrder] = useState([]);
+    const [isShowBasket, setIsShowBasket] = useState(false);
 
+    const handlerIsHowBasket = () => {
+        setIsShowBasket(!isShowBasket);
+    };
     const addToOrder = (item) => {
         const itemIndex = order.findIndex(
             (orderItem) => orderItem.mainId === item.mainId
@@ -49,12 +53,16 @@ const Shop = () => {
 
     return (
         <div className="container content">
-            <Cart quantity={order.length} />
+            <Cart
+                quantity={order.length}
+                handlerIsHowBasket={handlerIsHowBasket}
+            />
             {isLoading ? (
                 <Preloader />
             ) : (
                 <GoodsList goods={goods} addToOrder={addToOrder} />
             )}
+            {isShowBasket && <BasketList order={order} />}
         </div>
     );
 };
