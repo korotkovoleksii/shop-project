@@ -7,4 +7,18 @@
     background-color: #fff;
     width: 50rem;
     max-width: 95%;
+    animation: show 500ms ease-in-out;
+}
+.close-icon {
+    cursor: pointer;
+}
+@keyframes show {
+    from {
+        top: 70%;
+        opacity: 0;
+    }
+    to {
+        top: 50%;
+        opacity: 1;
+    }
 }

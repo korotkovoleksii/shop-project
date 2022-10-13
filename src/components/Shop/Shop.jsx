@@ -12,7 +12,7 @@ const Shop = () => {
     const [order, setOrder] = useState([]);
     const [isShowBasket, setIsShowBasket] = useState(false);
 
-    const handlerIsHowBasket = () => {
+    const handlerIsShowBasket = () => {
         setIsShowBasket(!isShowBasket);
     };
     const addToOrder = (item) => {
@@ -35,7 +35,33 @@ const Shop = () => {
             setOrder(newOrderList);
         }
     };
-
+    const deleteItemFromOrder = (id) => {
+        setOrder(
+            order.filter((item) => {
+                return item.mainId !== id;
+            })
+        );
+    };
+    const incrementItemInOrder = (id) => {
+        setOrder(
+            order.map((item) => {
+                if (item.mainId === id) {
+                    item.quantity += 1;
+                }
+                return item;
+            })
+        );
+    };
+    const decrementItemInOrder = (id) => {
+        setOrder(
+            order.map((item) => {
+                if (item.mainId === id) {
+                    item.quantity = item.quantity > 0 ? item.quantity - 1 : 0;
+                }
+                return item;
+            })
+        );
+    };
     useEffect(function getGoods() {
         fetch(API_URL, {
             headers: {
@@ -55,14 +81,22 @@ const Shop = () => {
         <div className="container content">
             <Cart
                 quantity={order.length}
-                handlerIsHowBasket={handlerIsHowBasket}
+                handlerIsShowBasket={handlerIsShowBasket}
             />
             {isLoading ? (
                 <Preloader />
             ) : (
                 <GoodsList goods={goods} addToOrder={addToOrder} />
             )}
-            {isShowBasket && <BasketList order={order} />}
+            {isShowBasket && (
+                <BasketList
+                    order={order}
+                    handlerIsShowBasket={handlerIsShowBasket}
+                    deleteItemFromOrder={deleteItemFromOrder}
+                    incrementItemInOrder={incrementItemInOrder}
+                    decrementItemInOrder={decrementItemInOrder}
+                />
+            )}
         </div>
     );
 };
