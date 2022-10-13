@@ -4,6 +4,7 @@ import Preloader from "../Preloader/Preloader.jsx";
 import GoodsList from "../GoodsList/GoodsList.jsx";
 import Cart from "../Cart/Cart.jsx";
 import BasketList from "../BasketList/BasketList.jsx";
+import Toast from "../Toast/Toast.jsx";
 import "./Shop.css";
 
 const Shop = () => {
@@ -11,6 +12,7 @@ const Shop = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [order, setOrder] = useState([]);
     const [isShowBasket, setIsShowBasket] = useState(false);
+    const [nameToast, setNameToast] = useState("");
 
     const handlerIsShowBasket = () => {
         setIsShowBasket(!isShowBasket);
@@ -34,6 +36,7 @@ const Shop = () => {
             });
             setOrder(newOrderList);
         }
+        setNameToast(item.displayName);
     };
     const deleteItemFromOrder = (id) => {
         setOrder(
@@ -51,6 +54,9 @@ const Shop = () => {
                 return item;
             })
         );
+    };
+    const closeToast = () => {
+        setNameToast("");
     };
     const decrementItemInOrder = (id) => {
         setOrder(
@@ -97,6 +103,7 @@ const Shop = () => {
                     decrementItemInOrder={decrementItemInOrder}
                 />
             )}
+            {nameToast && <Toast name={nameToast} closeToast={closeToast} />}
         </div>
     );
 };
