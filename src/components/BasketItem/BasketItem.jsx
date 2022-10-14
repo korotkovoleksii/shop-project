@@ -1,12 +1,12 @@
-const BasketItem = ({
-    name,
-    id,
-    price,
-    quantity,
-    deleteItemFromOrder = Function.prototype,
-    incrementItemInOrder = Function.prototype,
-    decrementItemInOrder = Function.prototype,
-}) => {
+import { useContext } from "react";
+import { ShopContext } from "../../context";
+
+const BasketItem = ({ name, id, price, quantity }) => {
+    // const { example } = useContext(ShopContext);
+    // console.log(example);
+    const { deleteItemFromOrder, incrementItemInOrder, decrementItemInOrder } =
+        useContext(ShopContext);
+
     return (
         <li className="collection-item">
             <div>

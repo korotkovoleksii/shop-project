@@ -1,19 +1,25 @@
 import { useEffect } from "react";
+import { useContext } from "react";
+import { ShopContext } from "../../context";
 import "./Toast.css";
 
-const Toast = ({ name, closeToast }) => {
+const Toast = () => {
+    const { closeToast: clToast, nameToast } = useContext(ShopContext);
+
     useEffect(() => {
         const timerId = setTimeout(() => {
-            closeToast();
+            // closeToast();
+            clToast();
         }, 3000);
         return () => {
             clearTimeout(timerId);
         };
-    }, [name]);
+    }, [nameToast]);
     return (
         <div id="toast-container">
-            <div className="toast">{name} added to basket</div>
+            <div className="toast">{nameToast} added to basket</div>
         </div>
     );
 };
+
 export default Toast;

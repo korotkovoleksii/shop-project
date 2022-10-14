@@ -1,7 +1,10 @@
 import GoodsItem from "../GoodsItem/GoodsItem";
+import { useContext } from "react";
+import { ShopContext } from "../../context";
 import "./GoodsList.css";
 
-const GoodsList = ({ goods = [], addToOrder = Function.prototype }) => {
+const GoodsList = () => {
+    const { goods, addToOrder } = useContext(ShopContext);
     return (
         <div className="goods">
             {goods.length

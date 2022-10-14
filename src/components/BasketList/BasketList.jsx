@@ -1,13 +1,17 @@
 import BasketItem from "../BasketItem/BasketItem";
+import { useContext } from "react";
+import { ShopContext } from "../../context";
 import "./BasketList.css";
 
-const BasketList = ({
-    order = [],
-    handlerIsShowBasket = Function.prototype,
-    deleteItemFromOrder = Function.prototype,
-    incrementItemInOrder = Function.prototype,
-    decrementItemInOrder = Function.prototype,
-}) => {
+const BasketList = ({}) => {
+    const {
+        order,
+        deleteItemFromOrder,
+        incrementItemInOrder,
+        decrementItemInOrder,
+        handlerShowBasket,
+    } = useContext(ShopContext);
+
     const total = order.reduce(
         (sum, el) => sum + el.price.finalPrice * el.quantity,
         0
@@ -20,7 +24,7 @@ const BasketList = ({
                     Basket{" "}
                     <i
                         className="material-icons right close-icon "
-                        onClick={handlerIsShowBasket}
+                        onClick={handlerShowBasket}
                     >
                         close
                     </i>
@@ -34,9 +38,6 @@ const BasketList = ({
                           name={item.displayName}
                           price={item.price.finalPrice}
                           quantity={item.quantity}
-                          deleteItemFromOrder={deleteItemFromOrder}
-                          incrementItemInOrder={incrementItemInOrder}
-                          decrementItemInOrder={decrementItemInOrder}
                       />
                   ))
                 : null}
